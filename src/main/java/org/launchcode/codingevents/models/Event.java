@@ -1,9 +1,7 @@
 package org.launchcode.codingevents.models;
 
 import java.util.Objects;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class Event {
 
@@ -14,23 +12,40 @@ public class Event {
     @Size(min = 3, max = 12, message = "Name must be between 3 and 12 chars long")
     private String name;
 
-    @Size(max = 50, message = "Description too long!")
+    @Size(max = 50, message = "Description too long")
     private String description;
+
+    //Enum
+    private EventType type;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email. Try again")
     private String contactEmail;
 
-    public Event(String name, String description, String contactEmail) {
+    @NotNull(message = "Location cannot be null")
+    @NotBlank(message = "Location cannot be blank")
+    @Size(min = 2, max = 50, message = "Location is required")
+    private String location;
+
+    private Boolean registration;
+
+    @Positive(message = "Number must be positive")
+    private Integer attendees;
+
+    public Event(String name, String description, String contactEmail, EventType type, String location, Boolean registration, Integer attendees) {
+        this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
-        this.id = nextId;
-        nextId++;
+        this.type = type;
+        this.location = location;
+        this.registration = registration;
+        this.attendees = attendees;
     }
 
     public Event(){
-
+        this.id = nextId;
+        nextId++;
     }
 
     public String getName() {
@@ -61,6 +76,46 @@ public class Event {
     public void setContactEmail(String contactEmail) {
 
         this.contactEmail = contactEmail;
+    }
+
+    public EventType getType() {
+
+        return type;
+    }
+
+    public void setType(EventType type) {
+
+        this.type = type;
+    }
+
+    public String getLocation() {
+
+        return location;
+    }
+
+    public void setLocation(String location) {
+
+        this.location = location;
+    }
+
+    public Boolean getRegistration() {
+
+        return registration;
+    }
+
+    public void setRegistration(Boolean registration) {
+
+        this.registration = registration;
+    }
+
+    public Integer getAttendees() {
+
+        return attendees;
+    }
+
+    public void setAttendees(Integer attendees) {
+
+        this.attendees = attendees;
     }
 
     public int getId() {
